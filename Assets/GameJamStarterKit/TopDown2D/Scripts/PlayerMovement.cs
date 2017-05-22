@@ -38,7 +38,7 @@ namespace GameJamStarterKit.TopDown2D
 
             EditorGUILayout.PropertyField(CanMove);
 
-            if (CanMove.boolValue)
+            if (CanMove.boolValue) //Only show variables related to move if the CanMove variable is true
             {
                 EditorGUILayout.PropertyField(Speed);
                 EditorGUILayout.PropertyField(AccelerationSpeed);
@@ -49,7 +49,7 @@ namespace GameJamStarterKit.TopDown2D
 
             EditorGUILayout.PropertyField(CanRotate);
 
-            if (CanRotate.boolValue)
+            if (CanRotate.boolValue) //Only show variable related to rotation if CanRotate is true
             {
                 EditorGUILayout.PropertyField(UseMouse);
                 if (UseMouse.boolValue)
@@ -70,7 +70,7 @@ namespace GameJamStarterKit.TopDown2D
 
 #endif
 
-
+    [AddComponentMenu("TopDown2D/PlayerMovement")]
     public class PlayerMovement : MonoBehaviour
     {
         public bool CanMove = true;
