@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameJamStarterKit.Sidescroller
 {
-    public class Player : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour
     {
 
         public float speed = 5;
