@@ -136,7 +136,7 @@ namespace GameJamStarterKit.TopDown2D
                     if (moveDir.magnitude > 1f) //We have to check if the magnitude of the vector is higher than 1, because of JoyStick analog input. If the player only want to move half as fast this is requied.
                         moveDir.Normalize();
 
-                    transform.position += moveDir * Speed * AccelerationCurve.Evaluate(moveTimer) * Time.deltaTime;
+                    transform.position += moveDir * Speed * Mathf.Clamp01(AccelerationCurve.Evaluate(moveTimer)) * Time.deltaTime;
                     moveTimer += Time.deltaTime * AccelerationSpeed;
 
                     if (HasAnimation)
