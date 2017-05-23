@@ -36,6 +36,9 @@ namespace GameJamStarterKit.TopDown2D
             SerializedProperty RotationInputAxisX = serializedObject.FindProperty("RotationInputAxisX");
             SerializedProperty RotationInputAxisY = serializedObject.FindProperty("RotationInputAxisY");
 
+            SerializedProperty HasAnimation = serializedObject.FindProperty("HasAnimation");
+            SerializedProperty AnimationBool = serializedObject.FindProperty("AnimationBool");
+
             EditorGUILayout.PropertyField(CanMove);
 
             if (CanMove.boolValue) //Only show variables related to move if the CanMove variable is true
@@ -61,6 +64,12 @@ namespace GameJamStarterKit.TopDown2D
                     EditorGUILayout.PropertyField(RotationInputAxisX);
                     EditorGUILayout.PropertyField(RotationInputAxisY);
                 }
+            }
+
+            EditorGUILayout.PropertyField(HasAnimation);
+            if (HasAnimation.boolValue)
+            {
+                EditorGUILayout.PropertyField(AnimationBool);
             }
 
 
@@ -97,13 +106,22 @@ namespace GameJamStarterKit.TopDown2D
         public string RotationInputAxisX = "Horizontal";
         public string RotationInputAxisY = "Vertical";
 
+        [Header("Animation:")]
+        [Tooltip("Do your player have an animation?")]
+        public bool HasAnimation = false;
+        [Tooltip("The animation bool to set")]
+        public string AnimationBool = "IsMoving";
+
+
 
 
         private float moveTimer = 0f; //For how long have we moved?
+        private Animator animator;
 
         // Use this for initialization
         void Start()
         {
+            animator = GetComponent<Animator>();
             AccelerationCurve.preWrapMode = WrapMode.Clamp;
             AccelerationCurve.postWrapMode = WrapMode.Clamp;
         }
@@ -120,10 +138,16 @@ namespace GameJamStarterKit.TopDown2D
 
                     transform.position += moveDir * Speed * AccelerationCurve.Evaluate(moveTimer) * Time.deltaTime;
                     moveTimer += Time.deltaTime * AccelerationSpeed;
+
+                    if (HasAnimation)
+                    animator.SetBool(AnimationBool, true);
                 }
                 else
                 {
                     moveTimer = 0;
+
+                    if (HasAnimation)
+                    animator.SetBool(AnimationBool, false);
                 }
 
             if (CanRotate)
