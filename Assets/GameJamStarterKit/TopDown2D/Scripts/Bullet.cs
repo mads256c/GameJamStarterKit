@@ -2,34 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Collider2D))]
-public class Bullet : MonoBehaviour {
+namespace GameJamStarterKit.TopDown2D
+{
 
-    [Tooltip("How fast should the bullet be?")]
-    public float Speed = 20f;
-    [Tooltip("How long the bullet should be in the world before it disappears.")]
-    public float TimeToLife = 10f;
-    [Tooltip("What should the bullet damage?")]
-    public LayerMask DamageLayer;
-
-    private new Rigidbody2D rigidbody;
-
-	// Use this for initialization
-	void Start () {
-        rigidbody = GetComponent<Rigidbody2D>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        rigidbody.velocity = transform.right * Speed * Time.deltaTime;
-	}
-
-    void OnCollisionEnter2D(Collision2D collision)
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Collider2D))]
+    public class Bullet : MonoBehaviour
     {
-        if (collision.gameObject.layer == DamageLayer)
+
+        [Tooltip("How fast should the bullet be?")]
+        public float Speed = 20f;
+        [Tooltip("How long the bullet should be in the world before it disappears.")]
+        public float TimeToLife = 10f;
+        [Tooltip("What should the bullet damage?")]
+        public LayerMask DamageLayer;
+
+        private new Rigidbody2D rigidbody;
+
+        // Use this for initialization
+        void Start()
         {
-            //Take dammage
+            rigidbody = GetComponent<Rigidbody2D>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            rigidbody.velocity = transform.right * Speed * Time.deltaTime;
+        }
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.layer == DamageLayer)
+            {
+                //Take damage
+            }
         }
     }
 }
