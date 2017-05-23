@@ -73,15 +73,26 @@ namespace GameJamStarterKit.TopDown2D
     [AddComponentMenu("TopDown2D/PlayerMovement")]
     public class PlayerMovement : MonoBehaviour
     {
+        [Header("Movement:")]
+        [Tooltip("Can the player move?")]
         public bool CanMove = true;
+        [Tooltip("How fast should the player move")]
         public float Speed = 10f;
+        [Tooltip("How fast we go through the Acceleration Curve")]
         public float AccelerationSpeed = 1f;
+        [Tooltip("How the player should Accelerate")]
         public AnimationCurve AccelerationCurve = new AnimationCurve(new Keyframe(0f, 0f, 0f, 0f), new Keyframe(1f, 1f, 0f, 0f)); //Used for accelerating the player. Could be used creativly.
+        [Tooltip("The axis that move the player left and right")]
         public string MoveInputAxisX = "Horizontal";
+        [Tooltip("The axis that move the player up and down")]
         public string MoveInputAxisY = "Vertical";
 
+        [Header("Rotation:")]
+        [Tooltip("Can the player rotate?")]
         public bool CanRotate = true;
+        [Tooltip("Should the player be controlled with the mouse?")]
         public bool UseMouse = true;
+        [Tooltip("The camera you can see the player in")]
         public Camera PlayerCamera;
         public string RotationInputAxisX = "Horizontal";
         public string RotationInputAxisY = "Vertical";
@@ -104,7 +115,8 @@ namespace GameJamStarterKit.TopDown2D
                 if (Input.GetAxisRaw(MoveInputAxisX) != 0 | Input.GetAxisRaw(MoveInputAxisY) != 0)
                 {
                     Vector3 moveDir = new Vector3(Input.GetAxisRaw(MoveInputAxisX), Input.GetAxisRaw(MoveInputAxisY), 0f);
-                    moveDir.Normalize();
+                    if (moveDir.magnitude > 1f) //We have to check if the magnitude of the vector is higher than 1, because of JoyStick analog input. If the player only want to move half as fast this is requied.
+                        moveDir.Normalize();
 
                     transform.position += moveDir * Speed * AccelerationCurve.Evaluate(moveTimer) * Time.deltaTime;
                     moveTimer += Time.deltaTime * AccelerationSpeed;
@@ -113,6 +125,7 @@ namespace GameJamStarterKit.TopDown2D
                 {
                     moveTimer = 0;
                 }
+
             if (CanRotate)
             {
                 float angle = 0;
@@ -124,6 +137,8 @@ namespace GameJamStarterKit.TopDown2D
                 }
                 else
                 {
+                    if (Input.GetAxisRaw(RotationInputAxisY) == 0 && Input.GetAxisRaw(RotationInputAxisX) == 0)
+                        return;
                     angle = Mathf.Rad2Deg * Mathf.Atan2(Input.GetAxisRaw(RotationInputAxisY), Input.GetAxisRaw(RotationInputAxisX));
                 }
                 transform.rotation = Quaternion.Euler(0f, 0f, angle);
