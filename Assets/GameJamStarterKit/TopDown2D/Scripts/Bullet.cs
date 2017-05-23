@@ -16,6 +16,8 @@ namespace GameJamStarterKit.TopDown2D
         public float TimeToLife = 10f;
         [Tooltip("What should the bullet damage?")]
         public LayerMask DamageLayer;
+        [Tooltip("How much damage should this bullet inflict?")]
+        public float Damage = 100f;
 
         private new Rigidbody2D rigidbody;
 
