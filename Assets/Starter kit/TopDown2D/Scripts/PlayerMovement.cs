@@ -80,6 +80,7 @@ namespace GameJamStarterKit.TopDown2D
 #endif
 
     [AddComponentMenu("TopDown2D/PlayerMovement")]
+    [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement:")]
@@ -117,11 +118,14 @@ namespace GameJamStarterKit.TopDown2D
 
         private float moveTimer = 0f; //For how long have we moved?
         private Animator animator;
+        private new Rigidbody2D rigidbody;
 
         // Use this for initialization
         void Start()
         {
             animator = GetComponent<Animator>();
+            rigidbody = GetComponent<Rigidbody2D>();
+            rigidbody.gravityScale = 0;
             AccelerationCurve.preWrapMode = WrapMode.Clamp;
             AccelerationCurve.postWrapMode = WrapMode.Clamp;
         }
@@ -132,11 +136,11 @@ namespace GameJamStarterKit.TopDown2D
             if (CanMove)
                 if (Input.GetAxisRaw(MoveInputAxisX) != 0 | Input.GetAxisRaw(MoveInputAxisY) != 0)
                 {
-                    Vector3 moveDir = new Vector3(Input.GetAxisRaw(MoveInputAxisX), Input.GetAxisRaw(MoveInputAxisY), 0f);
+                    Vector2 moveDir = new Vector3(Input.GetAxisRaw(MoveInputAxisX), Input.GetAxisRaw(MoveInputAxisY));
                     if (moveDir.magnitude > 1f) //We have to check if the magnitude of the vector is higher than 1, because of JoyStick analog input. If the player only want to move half as fast this is requied.
                         moveDir.Normalize();
-
-                    transform.position += moveDir * Speed * Mathf.Clamp01(AccelerationCurve.Evaluate(moveTimer)) * Time.deltaTime;
+                    Debug.Log(moveDir * Speed * Mathf.Clamp01(AccelerationCurve.Evaluate(moveTimer)) * Time.deltaTime);
+                    rigidbody.position += Vector2.Lerp(rigidbody.position, moveDir * Speed * Mathf.Clamp01(AccelerationCurve.Evaluate(moveTimer)) * Time.deltaTime, 1f);
                     moveTimer += Time.deltaTime * AccelerationSpeed;
 
                     if (HasAnimation)

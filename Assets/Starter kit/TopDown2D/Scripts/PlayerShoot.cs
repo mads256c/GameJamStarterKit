@@ -7,13 +7,21 @@ namespace GameJamStarterKit.TopDown2D
     [System.Serializable]
     public class Weapon
     {
-        public bool UseProjectile = true;
-        public GameObject BulletProjectile;
+        [Tooltip("The damage of the projectile or hitscan")]
         public float Damage = 100f;
+        [Tooltip("Use a projectile or use hitscan")]
+        public bool UseProjectile = true;
+        [Tooltip("The projectile that gets fired")]
+        public GameObject BulletProjectile;
+        [Tooltip("The speed the projectile is fired at")]
+        public float ProjectileSpeed = 10f;
+
+
 
     }
 
-
+    
+    [AddComponentMenu("TopDown2D/PlayerShoot")]
     public class PlayerShoot : MonoBehaviour
     {
         public Weapon[] Weapons;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GameJamStarterKit.TopDown2D
 {
-
+    [AddComponentMenu("TopDown2D/Bullet")]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
     public class Bullet : MonoBehaviour
@@ -25,6 +25,7 @@ namespace GameJamStarterKit.TopDown2D
         void Start()
         {
             rigidbody = GetComponent<Rigidbody2D>();
+            Destroy(gameObject, TimeToLife);
         }
 
         // Update is called once per frame
