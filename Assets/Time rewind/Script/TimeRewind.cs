@@ -9,6 +9,9 @@ namespace Juto.Rewind
     {
         private static List<TimeRewindHolder> target = new List<TimeRewindHolder>();
 
+        [Tooltip("Gameobjects to watch")]
+        public GameObject[] watch;
+
         public static int FramesSavedFor = 100;
 
 
@@ -29,11 +32,7 @@ namespace Juto.Rewind
 
         void Start()
         {
-            foreach(TimeRewindHolder holder in target)
-            {
-                holder.pos = new ArrayList();
-                holder.rot = new ArrayList();
-            }
+            AddGameObjects(watch);
         }
 
         void FixedUpdate()
