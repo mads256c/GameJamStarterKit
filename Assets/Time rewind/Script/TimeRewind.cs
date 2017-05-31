@@ -7,7 +7,7 @@ namespace Juto.Rewind
 {
     public class TimeRewind : MonoBehaviour
     {
-        public List<TimeRewindHolder> target = new List<TimeRewindHolder>();
+        private static List<TimeRewindHolder> target = new List<TimeRewindHolder>();
 
         public static int FramesSavedFor = 100;
 
@@ -26,6 +26,7 @@ namespace Juto.Rewind
         }
 
         private static bool isReversing;
+
         void Start()
         {
             foreach(TimeRewindHolder holder in target)
@@ -107,6 +108,28 @@ namespace Juto.Rewind
         {
             IsReversing = !IsReversing;
         }
+
+        /// <summary>
+        /// Adds a new Gameobject to the target list.
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void AddGameObject(GameObject obj)
+        {
+            TimeRewindHolder t = new TimeRewindHolder(obj);
+            target.Add(t);
+        }
+
+        /// <summary>
+        /// Adds a bunch of GameObjects to the list.
+        /// </summary>
+        /// <param name="objs"></param>
+        public static void AddGameObjects(GameObject[] objs)
+        {
+            foreach(GameObject obj in objs)
+            {
+                AddGameObject(obj);
+            }
+        }
     }
 
     [System.Serializable]
@@ -119,6 +142,8 @@ namespace Juto.Rewind
         public TimeRewindHolder(GameObject _target)
         {
             target = _target;
+            pos = new ArrayList();
+            rot = new ArrayList();
         }
     }
 }
