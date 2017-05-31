@@ -15,9 +15,9 @@ namespace GameJamStarterKit.TopDown2D
         [Tooltip("How long the bullet should be in the world before it disappears.")]
         public float TimeToLife = 10f;
         [Tooltip("What should the bullet damage?")]
-        public LayerMask DamageLayer;
+        public LayerMask DamageLayer = -1;
         [Tooltip("How much damage should this bullet inflict?")]
-        public float Damage = 100f;
+        public int Damage = 100;
 
         private new Rigidbody2D rigidbody;
 
@@ -31,7 +31,7 @@ namespace GameJamStarterKit.TopDown2D
         // Update is called once per frame
         void Update()
         {
-            rigidbody.velocity = transform.right * Speed * Time.deltaTime;
+            transform.position += transform.right * Speed * Time.deltaTime;
         }
 
         void OnCollisionEnter2D(Collision2D collision)

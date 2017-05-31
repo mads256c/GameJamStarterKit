@@ -19,7 +19,7 @@ namespace GameJamStarterKit.Sidescroller
 
 
         #region jump
-        BoxCollider2D collider; // our collider
+        new BoxCollider2D collider; // our collider
         const float skinWidth = .015f;
 
         [Range(3, 15)]
