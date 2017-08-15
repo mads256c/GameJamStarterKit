@@ -13,7 +13,7 @@ namespace GameJamStarterKit.TopDown2D
         [Tooltip("How fast should the bullet be?")]
         public float Speed = 20f;
         [Tooltip("How long the bullet should be in the world before it disappears.")]
-        public float TimeToLife = 10f;
+        public float TimeToLive = 10f;
         [Tooltip("What should the bullet damage?")]
         public LayerMask DamageLayer = -1;
         [Tooltip("How much damage should this bullet inflict?")]
@@ -25,7 +25,7 @@ namespace GameJamStarterKit.TopDown2D
         void Start()
         {
             rigidbody = GetComponent<Rigidbody2D>();
-            Destroy(gameObject, TimeToLife);
+            Destroy(gameObject, TimeToLive);
         }
 
         // Update is called once per frame

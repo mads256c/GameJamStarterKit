@@ -63,7 +63,7 @@ namespace GameJamStarterKit.TopDown2D
                 b.Damage = w.Damage;
                 b.Speed = w.ProjectileSpeed;
                 b.DamageLayer = w.DamageLayer;
-                b.TimeToLife = w.ProjectileTimeToLive;
+                b.TimeToLive = w.ProjectileTimeToLive;
             }
             else
             {
