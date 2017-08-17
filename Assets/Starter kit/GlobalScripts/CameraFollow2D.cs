@@ -8,7 +8,7 @@ namespace GameJamStarterKit
         public GameObject Target;
 
         [Tooltip("The offset the camera should be following with.")]
-        public Vector3 Offset;
+        public Vector3 Offset = new Vector3(0, 0, -10);
 
         [Tooltip("How smooth the motion should be.")]
         public float Lerp = 0.5f;
