@@ -1,30 +1,20 @@
 ﻿using UnityEngine;
 
-public class AudioObject : MonoBehaviour {
-
-
-    private AudioSource _audioSource;
-    
-    private void _initObject()
+namespace GameJamStarterKit
+{
+    public class AudioObject : MonoBehaviour
     {
-        _audioSource = GetComponent<AudioSource>();
-    }
-
-    public void Play(AudioClip _audioClip, float _volume = 1.0f, bool _is2D = false, int _priority = 128)
-    {
-        _initObject();
-
-        if (_audioClip != null)
+        public void Play(AudioClip audioClip, float volume = 1.0f, bool is2D = false, int priority = 128)
         {
-            _audioSource.clip = _audioClip;
-            _audioSource.volume = Mathf.Clamp01(_volume);
-            _audioSource.priority = Mathf.Clamp(_priority, 0, 256);
-            _audioSource.spatialBlend = System.Convert.ToInt32(_is2D);
-            _audioSource.Play();
-            Destroy(gameObject, _audioClip.length);
-            return;
-        }
-        Destroy(gameObject);
+            AudioSource audioSource = GetComponent<AudioSource>();
 
+                audioSource.clip = audioClip;
+                audioSource.volume = Mathf.Clamp01(volume);
+                audioSource.priority = Mathf.Clamp(priority, 0, 256);
+                audioSource.spatialBlend = System.Convert.ToInt32(is2D);
+                audioSource.Play();
+                Destroy(gameObject, audioClip.length);
+                return;
+        }
     }
 }
