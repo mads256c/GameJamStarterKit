@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Prime31;
 
 namespace GameJamStarterKit.TopDown2D
 {
@@ -80,7 +81,7 @@ namespace GameJamStarterKit.TopDown2D
 #endif
 
     [AddComponentMenu("TopDown2D/PlayerMovement")]
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(CharacterController2D))]
     public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement:")]
@@ -118,11 +119,13 @@ namespace GameJamStarterKit.TopDown2D
 
         private float moveTimer = 0f; //For how long have we moved?
         private Animator animator;
+        private CharacterController2D controller;
 
         // Use this for initialization
         void Start()
         {
             animator = GetComponent<Animator>();
+            controller = GetComponent<CharacterController2D>();
             AccelerationCurve.preWrapMode = WrapMode.Clamp;
             AccelerationCurve.postWrapMode = WrapMode.Clamp;
         }
@@ -137,7 +140,8 @@ namespace GameJamStarterKit.TopDown2D
                     if (moveDir.magnitude > 1f) //We have to check if the magnitude of the vector is higher than 1, because of JoyStick analog input. If the player only want to move half as fast this is requied.
                         moveDir.Normalize();
 
-                    transform.position += (Vector3)moveDir * Speed * Mathf.Clamp01(AccelerationCurve.Evaluate(moveTimer)) * Time.deltaTime;
+
+                    controller.move((Vector3)moveDir * Speed * Mathf.Clamp01(AccelerationCurve.Evaluate(moveTimer)) * Time.deltaTime);
                     moveTimer += Time.deltaTime * AccelerationSpeed;
 
                     if (HasAnimation)
