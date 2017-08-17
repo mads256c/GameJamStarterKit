@@ -5,8 +5,7 @@ using UnityEngine;
 namespace GameJamStarterKit.TopDown2D
 {
     [AddComponentMenu("TopDown2D/Bullet")]
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(Collider2D))]
     public class Bullet : MonoBehaviour
     {
 
