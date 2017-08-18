@@ -436,7 +436,7 @@ MonoBehaviour:
   Weapons:
   - GunTip: {fileID: 543419324}
     Damage: 100
-    CooldownTime: 0.2
+    CooldownTime: 0.05
     UseProjectile: 0
     BulletProjectile: {fileID: 0}
     ProjectileSpeed: 0
