@@ -19,6 +19,7 @@ namespace GameJamStarterKit
             var Lerp = serializedObject.FindProperty("Lerp");
             var UseCameraBounds = serializedObject.FindProperty("UseCameraBounds");
             var CameraBounds = serializedObject.FindProperty("CameraBounds");
+            var DynamicBounds = serializedObject.FindProperty("DynamicBounds");
 
             EditorGUILayout.PropertyField(Target);
             EditorGUILayout.PropertyField(Offset);
@@ -26,7 +27,10 @@ namespace GameJamStarterKit
 
             EditorGUILayout.PropertyField(UseCameraBounds);
             if (UseCameraBounds.boolValue)
+            {
                 EditorGUILayout.PropertyField(CameraBounds);
+                EditorGUILayout.PropertyField(DynamicBounds);
+            }
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -53,6 +57,8 @@ namespace GameJamStarterKit
         [Tooltip("The BoxCollider2D that sets the bounds.")]
         public BoxCollider2D CameraBounds;
 
+        [Tooltip("Do you change the bounds in runtime?")]
+        public bool DynamicBounds = false;
 
         private new Camera camera;
 
@@ -85,6 +91,14 @@ namespace GameJamStarterKit
         {
             if (UseCameraBounds)
             {
+                if (DynamicBounds)
+                {
+                    minX = (width - (CameraBounds.size.x * CameraBounds.transform.lossyScale.x / 2.0f)) + CameraBounds.transform.position.x;
+                    maxX = ((CameraBounds.size.x * CameraBounds.transform.lossyScale.x / 2.0f) - width) + CameraBounds.transform.position.x;
+                    minY = (height - (CameraBounds.size.y * CameraBounds.transform.lossyScale.y / 2.0f)) + CameraBounds.transform.position.y;
+                    maxY = ((CameraBounds.size.y * CameraBounds.transform.lossyScale.y / 2.0f) - height) + CameraBounds.transform.position.y;
+                }
+
                 Vector3 pos = Target.transform.position;
                 pos.x = Mathf.Clamp(pos.x, minX, maxX);
                 pos.y = Mathf.Clamp(pos.y, minY, maxY);
