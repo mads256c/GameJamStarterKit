@@ -2,10 +2,8 @@
 
 namespace GameJamStarterKit
 {
-
     public static class AudioManager
     {
-
         /// <summary>
         /// Plays a sound at a position.
         /// </summary>

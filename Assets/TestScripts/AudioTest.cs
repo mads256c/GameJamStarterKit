@@ -3,7 +3,6 @@ using GameJamStarterKit;
 
 namespace TestScripts
 {
-
     public class AudioTest : MonoBehaviour
     {
         public AudioClip audioClip;
