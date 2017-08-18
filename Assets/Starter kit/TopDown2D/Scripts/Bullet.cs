@@ -11,8 +11,6 @@ namespace GameJamStarterKit.TopDown2D
         public float Speed = 20f;
         [Tooltip("How long the bullet should be in the world before it disappears.")]
         public float TimeToLive = 10f;
-        [Tooltip("What should the bullet damage?")]
-        public LayerMask DamageLayer = -1;
         [Tooltip("How much damage should this bullet inflict?")]
         public int Damage = 100;
 
@@ -28,14 +26,14 @@ namespace GameJamStarterKit.TopDown2D
         // Update is called once per frame
         void Update()
         {
-            transform.position += transform.right * Speed * Time.deltaTime;
+            rigidbody.position += (Vector2)transform.right * Speed * Time.deltaTime;
         }
 
         void OnCollisionEnter2D(Collision2D collision)
         {
-            if (collision.gameObject.layer == DamageLayer)
+            if (collision.gameObject.GetComponent<EnemyBase>() != null)
             {
-                //Take damage
+                collision.gameObject.GetComponent<EnemyBase>().TakeDamage(Damage);
             }
         }
     }
