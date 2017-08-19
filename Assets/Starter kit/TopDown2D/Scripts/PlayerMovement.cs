@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Prime31;
+using TeamUtility.IO;
 
 namespace GameJamStarterKit.TopDown2D
 {
@@ -24,6 +23,8 @@ namespace GameJamStarterKit.TopDown2D
             serializedObject.Update(); //Needed for some types.
 
             //Get all the variables that should be displayed in PlayerMovement
+            SerializedProperty playerID = serializedObject.FindProperty("playerID");
+
             SerializedProperty CanMove = serializedObject.FindProperty("CanMove");
             SerializedProperty Speed = serializedObject.FindProperty("Speed");
             SerializedProperty AccelerationSpeed = serializedObject.FindProperty("AccelerationSpeed");
@@ -40,6 +41,7 @@ namespace GameJamStarterKit.TopDown2D
             SerializedProperty HasAnimation = serializedObject.FindProperty("HasAnimation");
             SerializedProperty AnimationBool = serializedObject.FindProperty("AnimationBool");
 
+            EditorGUILayout.PropertyField(playerID);
             EditorGUILayout.PropertyField(CanMove);
 
             if (CanMove.boolValue) //Only show variables related to move if the CanMove variable is true
@@ -84,6 +86,9 @@ namespace GameJamStarterKit.TopDown2D
     [RequireComponent(typeof(Rigidbody2D), typeof(CharacterController2D))]
     public class PlayerMovement : MonoBehaviour
     {
+        [Tooltip("What player this script should respond to")]
+        public PlayerID playerID = PlayerID.One;
+
         [Header("Movement:")]
         [Tooltip("Can the player move?")]
         public bool CanMove = true;
@@ -115,7 +120,7 @@ namespace GameJamStarterKit.TopDown2D
         public string AnimationBool = "IsMoving";
 
 
-
+        
 
         private float moveTimer = 0f; //For how long have we moved?
         private Animator animator;
@@ -134,9 +139,9 @@ namespace GameJamStarterKit.TopDown2D
         void Update()
         {
             if (CanMove)
-                if (Input.GetAxisRaw(MoveInputAxisX) != 0 | Input.GetAxisRaw(MoveInputAxisY) != 0)
+                if (InputManager.GetAxisRaw(MoveInputAxisX, playerID) != 0 | InputManager.GetAxisRaw(MoveInputAxisY, playerID) != 0)
                 {
-                    Vector2 moveDir = new Vector3(Input.GetAxisRaw(MoveInputAxisX), Input.GetAxisRaw(MoveInputAxisY));
+                    Vector2 moveDir = new Vector3(InputManager.GetAxisRaw(MoveInputAxisX, playerID), InputManager.GetAxisRaw(MoveInputAxisY, playerID));
                     if (moveDir.magnitude > 1f) //We have to check if the magnitude of the vector is higher than 1, because of JoyStick analog input. If the player only want to move half as fast this is requied.
                         moveDir.Normalize();
 
@@ -166,7 +171,7 @@ namespace GameJamStarterKit.TopDown2D
                 }
                 else
                 {
-                    if (Input.GetAxisRaw(RotationInputAxisY) == 0 && Input.GetAxisRaw(RotationInputAxisX) == 0)
+                    if (InputManager.GetAxisRaw(RotationInputAxisY) == 0 && InputManager.GetAxisRaw(RotationInputAxisX) == 0)
                         return;
                     angle = Mathf.Rad2Deg * Mathf.Atan2(Input.GetAxisRaw(RotationInputAxisY), Input.GetAxisRaw(RotationInputAxisX));
                 }

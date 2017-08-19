@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TeamUtility.IO;
 
 namespace GameJamStarterKit.TopDown2D
 {
@@ -55,7 +56,7 @@ namespace GameJamStarterKit.TopDown2D
         {
             timer += Time.deltaTime;
 
-            if (Input.GetButton("Fire1"))
+            if (InputManager.GetButton("Fire1"))
                 ShootWeapon();
         }
 
