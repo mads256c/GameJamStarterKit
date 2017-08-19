@@ -5,8 +5,8 @@ using TeamUtility.IO;
 namespace GameJamStarterKit.TopDown2D
 {
 
-
-//If we are in unity editor. Add the ability to edit the acceleration curve and display values more nicely.
+    #region Inspector Code
+    //If we are in unity editor. Add the ability to edit the acceleration curve and display values more nicely.
 #if UNITY_EDITOR
     using UnityEditor;
 
@@ -81,6 +81,7 @@ namespace GameJamStarterKit.TopDown2D
     }
 
 #endif
+    #endregion
 
     [AddComponentMenu("TopDown2D/PlayerMovement")]
     [RequireComponent(typeof(Rigidbody2D), typeof(CharacterController2D))]
