@@ -789,13 +789,13 @@ MonoBehaviour:
       joystick: 0
     - name: Fire1
       description: 
-      positive: 0
+      positive: 323
       negative: 0
       altPositive: 0
       altNegative: 0
       deadZone: 0
-      gravity: 1
-      sensitivity: 1
+      gravity: 0
+      sensitivity: 0
       snap: 0
       invert: 0
       type: 0
@@ -1113,6 +1113,21 @@ Prefab:
       propertyPath: PlayerCamera
       value: 
       objectReference: {fileID: 1063260806}
+    - target: {fileID: 114186318097958750, guid: b98dbd0d51b01d949941c256a894ac35,
+        type: 2}
+      propertyPath: UseMouse
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114186318097958750, guid: b98dbd0d51b01d949941c256a894ac35,
+        type: 2}
+      propertyPath: RotationInputAxisX
+      value: LookHorizontal
+      objectReference: {fileID: 0}
+    - target: {fileID: 114186318097958750, guid: b98dbd0d51b01d949941c256a894ac35,
+        type: 2}
+      propertyPath: RotationInputAxisY
+      value: LookVertical
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b98dbd0d51b01d949941c256a894ac35, type: 2}
   m_IsPrefabParent: 0

@@ -165,7 +165,7 @@ namespace GameJamStarterKit.TopDown2D
                 float angle = 0;
                 if (UseMouse)
                 {
-                    Vector3 cursorInWorldPos = PlayerCamera.ScreenToWorldPoint(Input.mousePosition);
+                    Vector3 cursorInWorldPos = PlayerCamera.ScreenToWorldPoint(InputManager.mousePosition);
                     angle = Mathf.Rad2Deg * Mathf.Atan2(cursorInWorldPos.y - transform.position.y, cursorInWorldPos.x - transform.position.x);
 
                 }
@@ -173,7 +173,7 @@ namespace GameJamStarterKit.TopDown2D
                 {
                     if (InputManager.GetAxisRaw(RotationInputAxisY) == 0 && InputManager.GetAxisRaw(RotationInputAxisX) == 0)
                         return;
-                    angle = Mathf.Rad2Deg * Mathf.Atan2(Input.GetAxisRaw(RotationInputAxisY), Input.GetAxisRaw(RotationInputAxisX));
+                    angle = Mathf.Rad2Deg * Mathf.Atan2(InputManager.GetAxisRaw(RotationInputAxisY), InputManager.GetAxisRaw(RotationInputAxisX));
                 }
                 transform.rotation = Quaternion.Euler(0f, 0f, angle);
             }
