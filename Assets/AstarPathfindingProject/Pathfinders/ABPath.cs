@@ -332,9 +332,9 @@ namespace Pathfinding {
 				return;
 			}
 
-			if (!startNode.Walkable) {
+			if (!CanTraverse(startNode)) {
 				Error();
-				LogError("The node closest to the start point is not walkable");
+				LogError("The node closest to the start point could not be traversed");
 				return;
 			}
 
@@ -358,9 +358,9 @@ namespace Pathfinding {
 				}
 
 				// This should not trigger unless the user has modified the NNConstraint
-				if (!endNode.Walkable) {
+				if (!CanTraverse(endNode)) {
 					Error();
-					LogError("The node closest to the end point is not walkable");
+					LogError("The node closest to the end point could not be traversed");
 					return;
 				}
 

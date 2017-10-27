@@ -89,10 +89,11 @@ namespace Pathfinding {
 
 		internal override void DestroyAllNodesInternal () {
 			GetNodes(node => {
-				// If the grid data happens to be invalid (e.g we had to abort a graph update while it was running)
-				// this will prevent the Destroy method from potentially throwing IndexOutOfRange exceptions due to
-				// trying to access nodes outside the graph. It is safe to do this because we are destroying all nodes
-				// in the graph anyway.
+				// If the grid data happens to be invalid (e.g we had to abort a graph update while it was running) using 'false' as
+				// the parameter will prevent the Destroy method from potentially throwing IndexOutOfRange exceptions due to trying
+				// to access nodes outside the graph. It is safe to do this because we are destroying all nodes in the graph anyway.
+				// We do however need to clear custom connections in both directions
+				(node as GridNodeBase).ClearCustomConnections(true);
 				node.ClearConnections(false);
 				node.Destroy();
 			});

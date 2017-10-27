@@ -1,5 +1,25 @@
 /** \page changelog Changelog
 
+- 4.0.11 (2017-09-09)
+	- Fixed paths would ignore the ITraversalProvider (used for the turn based utilities) on the first node of the path, resulting in successful paths where they should have failed.
+	- Fixed BlockManager.BlockMode.AllExceptSelector could often produce incorrect results. Thanks Cquels for spotting the bug.
+	- Fixed various bugs related to destroying/adding graphs that could cause exceptions. Thanks DougW for reporting this.
+	- Fixed destroying a grid graph would not correctly clear all custom connections. Thanks DougW for reporting this.
+	- Fixed the MultiTargetPath did not reset all fields to their default values when using path pooling.
+	- Added some additional error validation in the MultiTargetPath class.
+	- Fixed scanning a recast graph that was not using tiles using Unity 2017.1 or later on Windows could block indefinitely. Thanks David Drummond and ceebeee for reporting this.
+	- Improved compatibility with Nintendo Switch. Thanks Noogy for the help.
+	- Fixed GraphUpdateScene would not handle the GameObject's scale properly which could cause it to not update some nodes.
+	- Fixed a regression in 4.0 which could cause the error to be omitted from log messages when paths failed.
+	- Fixed several bugs relating to #Pathfinding.NNConstraint.distanceXZ and #Pathfinding.NavmeshBase.nearestSearchOnlyXZ. Thanks koirat for reporting this.
+	- Fixed scanning a graph that threw an error would prevent any future scans. Thanks Baste for reporting this.
+	- Added a new get started video tutorial. See \ref getstarted.
+	- The PointGraph.nodeCount property is now protected instead of private, which fixes some compatibility issues.
+	- Improved compatibility with Unity 2017.1, esp. when using the experimental .Net 4.6 target. Thanks Scott_Richmond for reporting the issues.
+	- Fixed DynamicGridObstacle trying to update the graphs even when outside of play mode.
+	- Fixed runtime error when targeting the Windows Store. Thanks cedtat for reporting the bug.
+	- Fixed compilation error when targeting the Windows Store. Introduced in 4.0.3. Thanks cedtat for reporting the bug.
+
 - 4.0.10 (2017-05-01)
 	- Fixed compiler errors in the free version because the ManualRVOAgent.cs script being included by mistake. Thanks hummerbummer for reporting the issue.
 	- Fixed Unity's scene view picking being blocked by graph gizmos. Thanks Scott_Richmond for reporting the bug.

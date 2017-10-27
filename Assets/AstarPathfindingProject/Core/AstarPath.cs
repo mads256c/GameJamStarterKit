@@ -28,7 +28,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	/** The version number for the A* %Pathfinding Project */
 	public static System.Version Version {
 		get {
-			return new System.Version(4, 0, 10);
+			return new System.Version(4, 0, 11);
 		}
 	}
 
@@ -424,6 +424,15 @@ public class AstarPath : VersionedMonoBehaviour {
 	 */
 	public bool IsAnyWorkItemInProgress { get { return workItems.workItemsInProgress; } }
 
+	/** Returns if this code is currently being exectuted inside a work item.
+	 * \note This includes pretty much all types of graph updates.
+	 * Such as normal graph updates, navmesh cutting and anything added by #RegisterSafeUpdate or #AddWorkItem.
+	 *
+	 * In contrast to #IsAnyWorkItemInProgress this is only true when work item code is being executed, it is not
+	 * true in-between the updates to a work item that takes several frames to complete.
+	 */
+	internal bool IsInsideWorkItem { get { return workItems.workItemsInProgressRightNow; } }
+
 	#endregion
 
 	#region Callbacks
@@ -532,7 +541,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	PathProcessor.GraphUpdateLock workItemLock;
 
 	/** Holds all completed paths waiting to be returned to where they were requested */
-	readonly PathReturnQueue pathReturnQueue;
+	internal readonly PathReturnQueue pathReturnQueue;
 
 	/** Holds settings for heuristic optimization.
 	 * \see heuristic-opt
@@ -1534,6 +1543,8 @@ public class AstarPath : VersionedMonoBehaviour {
 
 		GraphModifier.TriggerEvent(GraphModifier.EventType.PreScan);
 
+		data.LockGraphStructure();
+
 		var watch = System.Diagnostics.Stopwatch.StartNew();
 
 		// Destroy previous nodes
@@ -1555,11 +1566,23 @@ public class AstarPath : VersionedMonoBehaviour {
 
 			var progressDescriptionPrefix = "Scanning graph " + (i+1) + " of " + graphsToScan.Length + " - ";
 
-			foreach (var progress in ScanGraph(graphsToScan[i])) {
-				yield return new Progress(Mathf.Lerp(minp, maxp, progress.progress), progressDescriptionPrefix + progress.description);
+			// Like a foreach loop but it gets a little complicated because of the exception
+			// handling (it is not possible to yield inside try-except clause).
+			var coroutine = ScanGraph(graphsToScan[i]).GetEnumerator();
+			while (true) {
+				try {
+					if (!coroutine.MoveNext()) break;
+				} catch {
+					isScanning = false;
+					data.UnlockGraphStructure();
+					graphUpdateLock.Release();
+					throw;
+				}
+				yield return new Progress(Mathf.Lerp(minp, maxp, coroutine.Current.progress), progressDescriptionPrefix + coroutine.Current.description);
 			}
 		}
 
+		data.UnlockGraphStructure();
 		yield return new Progress(0.8F, "Post processing graphs");
 
 		if (OnPostScan != null) {

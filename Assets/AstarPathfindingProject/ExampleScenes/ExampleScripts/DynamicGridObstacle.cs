@@ -72,7 +72,7 @@ namespace Pathfinding {
 				return;
 			}
 
-			if (AstarPath.active == null || AstarPath.active.isScanning || Time.realtimeSinceStartup - lastCheckTime < checkTime) {
+			if (AstarPath.active == null || AstarPath.active.isScanning || Time.realtimeSinceStartup - lastCheckTime < checkTime || !Application.isPlaying) {
 				return;
 			}
 
