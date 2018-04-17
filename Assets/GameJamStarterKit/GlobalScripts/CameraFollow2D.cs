@@ -48,7 +48,7 @@ namespace GameJamStarterKit
         public Vector3 Offset = new Vector3(0, 0, -10);
 
         [Tooltip("How smooth the motion should be.")]
-        public float Lerp = 0.5f;
+        public float Lerp = 3f;
 
         [Header("Use camera bounds?")]
         [Tooltip("Should the camera be limited by a rectangle.")]
@@ -108,7 +108,7 @@ namespace GameJamStarterKit
             else
             {
                 // Set the position of the camera's transform to be the same as the player's, but offset.
-                transform.position = Vector3.Lerp(transform.position, Target.transform.position + Offset, Lerp);
+                transform.position = Vector3.Lerp(transform.position, Target.transform.position + Offset, Lerp * Time.deltaTime);
             }
 
         }
