@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 namespace GameJamStarterKit.TopDown2D
